@@ -121,3 +121,109 @@ TEST_CASE("Test (10) :initialization case ")
     CHECK(p2.stacksize() == 26);
 }
 
+TEST_CASE("Test (11) : 5 turns ")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+    for( int i=0; i<5; i++)
+        game.playTurn();
+
+    game.printLastTurn();
+    CHECK(p1.cardesTaken() == 0);
+    CHECK(p2.cardesTaken() == 0);
+    CHECK(p1.stacksize() == 21);
+    CHECK(p2.stacksize() == 21);
+}
+
+TEST_CASE("Test (12) :2 players have the same name")
+{
+    Player p1("Alice");
+    
+    CHECK_THROWS(Game{ p1,p1});
+}
+
+TEST_CASE("Test (13) :There is no name to player 1 ")
+{
+    Player p1("");
+    Player p2("Bob");
+
+    CHECK_THROWS( Game {p1,p2});
+}
+
+TEST_CASE("Test (14) :There is no name to player 2 ")
+{
+    Player p1("Alice");
+    Player p2("");
+
+    CHECK_THROWS( Game {p1,p2});
+}
+
+TEST_CASE("Test (15) :player can play only in one game at the same time")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Player p3("Cami");
+    Game game(p1,p2);
+    
+    CHECK_THROWS(Game(p2,p3));
+}
+
+TEST_CASE("Test (16) :if the stacks works OK ")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+    for( int i=0; i<5; i++)
+        game.playTurn();
+    
+    CHECK(p2.stacksize() <=21);
+}
+
+TEST_CASE("Test (17) :if the cards taken works OK ")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+     for( int i=0; i<5; i++)
+        game.playTurn();
+    
+    CHECK((p1.cardesTaken() !=0) || (p2.cardesTaken() !=0));
+}
+
+TEST_CASE("Test (18) : there is no cards")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+    game.playAll();
+    p1.setInGame(true);
+    p2.setInGame(true);
+    CHECK_THROWS(game.playTurn());
+}
+
+TEST_CASE("Test (19) :have the same number of cards after one turn")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+    game.playTurn();
+
+    CHECK( p1.stacksize() == p2.stacksize() );
+}
+
+TEST_CASE("Test (20) : play turn check ")
+{
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1,p2);
+
+    game.playAll();
+    CHECK_THROWS(game.playTurn());
+}
+
