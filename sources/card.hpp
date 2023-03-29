@@ -9,12 +9,12 @@ namespace ariel
     {
         private:
             char suit;
-            int rank;
+            int value;
         
         public:
             Card(int value, char suit);
-            char get_Suit() const { return suit; }
-            int get_Value() const { return value; }
+            char getSuit() const { return suit; }
+            int getValue() const { return value; }
 
     };
 };
