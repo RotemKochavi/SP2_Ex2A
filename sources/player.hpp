@@ -2,7 +2,7 @@
 #include <iostream>
 #include "card.hpp"
 
-using namespacestd;
+using namespace std;
 
 namespace ariel
 {
